@@ -31,6 +31,18 @@ using namespace std;
 		//task with a priority of 1, and insert the new task between the last task with a priority of
 		//1 and the first task with a priority of 2
 		//it also updates the total time of the list
+		DNode *newNode = new DNode(t,p,h,m);
+		if(last == NULL){
+			return;
+		}
+		DNode *tempLast = last;
+		while(tempLast != NULL && tempLast->task->priority > newTask->priority){
+			tempLast = tempLast->prev;
+		}
+		if(tempLast == NULL){ // reached end of list, no priorities found, add to top of list
+
+		}
+
 	}
 
 	Task *DLL::pop() {
