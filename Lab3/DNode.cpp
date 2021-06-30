@@ -6,6 +6,9 @@ using namespace std;
 
 DNode::DNode(string t, int p, int h, int m){
 /*You need to write this!!!! */
+	task = new Task(t,p,h,m);
+	next = NULL;
+	prev = NULL;
 }
 
 
