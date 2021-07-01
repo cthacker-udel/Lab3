@@ -112,6 +112,17 @@ using namespace std;
 		//in as pointers) of a particular priority (so the total time
 		//needed to complete all tasks with priority of p)
 		//I had you pass in the parameters as pointers for practice.
+		int totMin = 0;
+		int totHr = 0;
+		DNode *firstNode = first;
+		while(firstNode != NULL){
+			if(firstNode->task->priority == tp){
+				totMin += firstNode->task->min;
+				totHr += firstNode->task->hr;
+			}
+		}
+		*th = totHr;
+		*tm = totMin;
 	}
 
 
