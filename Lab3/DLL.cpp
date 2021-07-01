@@ -78,11 +78,23 @@ using namespace std;
 	void DLL::printList() {
 		//prints out the entire list, along with the total time necessary to complete
 		//all tasks on the list
+		DNode *firstNode = first;
+		while(firstNode != NULL){
+			firstNode->task->printTask();
+			firstNode = firstNode->next;
+		}
 	}
 
 	void DLL::printList(int p) {
 		//print out only all the tasks with a priority of p, along with the total time necessary
 		//to complete the tasks with a priority of p
+		DNode *firstNode = first;
+		while(firstNode != NULL){
+			if(firstNode->task->priority == p){
+				firstNode->task->printTask();
+			}
+			firstNode = firstNode->next;
+		}
 	}
 
 	void DLL::moveUp(int t) {
