@@ -31,16 +31,23 @@ using namespace std;
 		//task with a priority of 1, and insert the new task between the last task with a priority of
 		//1 and the first task with a priority of 2
 		//it also updates the total time of the list
-		DNode *newNode = new DNode(t,p,h,m);
+		DNode *newNode = new DNode(n,p,h,m);
 		if(last == NULL){
 			return;
 		}
 		DNode *tempLast = last;
-		while(tempLast != NULL && tempLast->task->priority > newTask->priority){
+		while(tempLast != NULL && tempLast->task->priority > newNode->task->priority){
 			tempLast = tempLast->prev;
 		}
-		if(tempLast == NULL){ // reached end of list, no priorities found, add to top of list
-
+		if(tempLast == NULL){ // reached beginning of list
+			newNode->next = first;
+			first->prev = newNode;
+			first = newNode;
+		}
+		else{
+			newNode->next = tempLast->next;
+			tempLast->next = newNode;
+			newNode->prev = tempLast;
 		}
 
 	}
