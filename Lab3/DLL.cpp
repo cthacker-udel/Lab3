@@ -210,6 +210,16 @@ using namespace std;
 			task5, 2, 1:10
 			task7, 3, 2:54
 		*/
+		DNode *lastPNode;
+		DNode *tempHead = first;
+		while(tempHead != NULL){
+			if(tempHead->task->tasknum == tn){
+				tempHead->task->priority = newp;
+				break;
+			}
+		}
+		remove(tempHead->task->tasknum);
+		push(tempHead->task->task,tempHead->task->priority,tempHead->task->hr,tempHead->task->min);
 	}
 
 	DLL::~DLL(){
