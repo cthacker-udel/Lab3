@@ -32,6 +32,8 @@ using namespace std;
 		//1 and the first task with a priority of 2
 		//it also updates the total time of the list
 		DNode *newNode = new DNode(n,p,h,m);
+		totmin += newNode->task->min;
+		tothrs += newNode->task->hr;
 		if(last == NULL){
 			return;
 		}
@@ -57,6 +59,20 @@ using namespace std;
 		//Note -this isn’t all that necessary for this particular project, but I
 		//kinda had to make you write pop because it’s //fundamental to so much of
 		//linked list data type uses (e.g., stack, undo).
+		DNode *lastNode = last;
+		tothrs -= lastNode->task->hr;
+		totmin -= lastNode->task->min;
+		if(lastNode->prev == NULL){
+			delete lastNode;
+			delete first;
+			delete last;
+		}
+		else{
+			DNode *prevNode = lastNode->prev;
+			lastNode->prev = NULL;
+			prevNode->next = NULL;
+			delete lastNode;
+		}
 	}
 
 	void DLL::printList() {
