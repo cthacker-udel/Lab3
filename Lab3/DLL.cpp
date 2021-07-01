@@ -34,6 +34,7 @@ using namespace std;
 		DNode *newNode = new DNode(n,p,h,m);
 		totmin += newNode->task->min;
 		tothrs += newNode->task->hr;
+		numTasks++;
 		if(last == NULL){
 			return;
 		}
@@ -62,6 +63,7 @@ using namespace std;
 		DNode *lastNode = last;
 		tothrs -= lastNode->task->hr;
 		totmin -= lastNode->task->min;
+		numTasks--;
 		if(lastNode->prev == NULL){
 			delete lastNode;
 			delete first;
@@ -139,6 +141,52 @@ using namespace std;
 		//biggest catch with this method is making sure you test to make sure the node
 		//after and/or the node before the node you’re deleting aren’t NULL (i.e., you’re
 		//not deleting the first or last node in the list)
+		DNode *firstNode = first;
+		if(firstNode->prev == NULL && firstNode->next == NULL && firstNode->task->tasknum == tn){
+			delete first;
+			delete last;
+			tothrs = 0;
+			totmin = 0;
+			numTasks--;
+			return 0;
+		}
+		else if(firstNode->prev == NULL && firstNode->task->tasknum == tn){
+			// is first node
+			DNode *frontNode = firstNode->next;
+			tothrs -= firstNode->task->hr;
+			totmin -= firstNode->task->min;
+			frontNode->prev = NULL;
+			firstNode->next = NULL;
+			delete firstNode;
+			first = frontNode;
+			return 1;
+		}
+		else if(last->task->tasknum == tn){
+			tothrs -= last->task->hr;
+			totmin -= last->task->min;
+			DNode *prevNode = last->prev;
+			prevNode->next = NULL;
+			last->prev = NULL;
+			delete last;
+			last = prevNode;
+			return 1;
+		}
+		else{
+			while(firstNode != NULL){
+				if(firstNode->task->tasknum == tn){
+					DNode *prevNode = firstNode->prev;
+					prevNode->next = firstNode->next;
+					firstNode->prev = prevNode;
+					firstNode->next = NULL;
+					firstNode->prev = NULL;
+					tothrs -= firstNode->task->hr;
+					totmin -= firstNode->task->min;
+					delete firstNode;
+					return 1;
+				}
+			}
+			return 0;
+		}
 	}
 
 	void DLL::changePriority(int tn, int newp) {
