@@ -133,6 +133,41 @@ using namespace std;
 		//If it is at the end of the list, it will move to the beginning of the list.
 		//NOTE: if this moves a task after a task with a lower priority (again, 3 is
 		//a lower priority than 2) then this changes the priority of the task being moved.
+		DNode *currNode = first;
+		while(currNode != NULL){
+			if(currNode->task->tasknum == tn){ // node with tasknum is tail
+				if(currNode->next == NULL){
+					currNode->prev->next = NULL;
+					currNode->prev = NULL;
+					currNode->next = first;
+					first->prev = currNode;
+					first = currNode;
+					break;
+				}
+				else if(currNode->prev == NULL){ // node with tasknum is head
+					first = currNode->next;
+					currNode->prev = currNode->next;
+					currNode->next->prev = NULL;
+					currNode->next = currNode->next->next;
+					currNode->prev->next = currNode;
+					if(first->task->priority > currNode->task->priority){
+						currNode->task->priority = first->task->priority;
+					}
+					break;
+				}
+				else{
+
+					if(currNode->next->task->priority > currNode->task->priority){
+						currNode->task->priority = currNode->next->task->priority;
+					}
+					currNode->next->prev = currNode->prev;
+					currNode->prev = currNode->next;
+					currNode->next = currNode->next->next;
+					currNode->prev->next = currNode;
+					break;
+				}
+			}
+		}
 	}
 
 	int DLL::remove(int tn) {
