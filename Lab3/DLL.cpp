@@ -243,15 +243,18 @@ using namespace std;
 		//not deleting the first or last node in the list)
 		DNode *firstNode = first;
 		if(firstNode->prev == NULL && firstNode->next == NULL && firstNode->task->tasknum == tn){ // last node
+			cout << "Reached first if" << endl;
 			delete first;
 			delete last;
 			tothrs = 0;
 			totmin = 0;
 			numTasks--;
+			cout << "Reached end of first if" << endl;
 			return 0;
 		}
 		else if(firstNode->prev == NULL && firstNode->task->tasknum == tn){ // node is head
 			// is first node
+			cout << "Reached second if" << endl;
 			DNode *frontNode = firstNode->next;
 			removeTime(firstNode->task->hr,firstNode->task->min);
 			frontNode->prev = NULL;
@@ -261,6 +264,7 @@ using namespace std;
 			return 1;
 		}
 		else if(last->task->tasknum == tn){ // node is tail
+			cout << "Reached third if" << endl;
 			removeTime(last->task->hr,last->task->min);
 			DNode *prevNode = last->prev;
 			prevNode->next = NULL;
@@ -270,19 +274,21 @@ using namespace std;
 			return 1;
 		}
 		else{
+			cout << "Reached else, before while loop" << endl;
 			while(firstNode != NULL){
 				if(firstNode->task->tasknum == tn){
 					DNode *prevNode = firstNode->prev;
 					prevNode->next = firstNode->next;
-					firstNode->prev = prevNode;
-					firstNode->next = NULL;
+					firstNode->next->prev = prevNode;
 					firstNode->prev = NULL;
+					firstNode->next = NULL;
 					removeTime(firstNode->task->hr,firstNode->task->min);
 					delete firstNode;
 					return 1;
 				}
 				firstNode = firstNode->next;
 			}
+			cout << "Reached end of while loop" << endl;
 			return 0;
 		}
 	}
