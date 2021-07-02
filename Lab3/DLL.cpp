@@ -242,7 +242,7 @@ using namespace std;
 		//after and/or the node before the node you’re deleting aren’t NULL (i.e., you’re
 		//not deleting the first or last node in the list)
 		DNode *firstNode = first;
-		if(firstNode->prev == NULL && firstNode->next == NULL && firstNode->task->tasknum == tn){
+		if(firstNode->prev == NULL && firstNode->next == NULL && firstNode->task->tasknum == tn){ // last node
 			delete first;
 			delete last;
 			tothrs = 0;
@@ -250,20 +250,18 @@ using namespace std;
 			numTasks--;
 			return 0;
 		}
-		else if(firstNode->prev == NULL && firstNode->task->tasknum == tn){
+		else if(firstNode->prev == NULL && firstNode->task->tasknum == tn){ // node is head
 			// is first node
 			DNode *frontNode = firstNode->next;
-			tothrs -= firstNode->task->hr;
-			totmin -= firstNode->task->min;
+			removeTime(firstNode->task->hr,firstNode->task->min);
 			frontNode->prev = NULL;
 			firstNode->next = NULL;
 			delete firstNode;
 			first = frontNode;
 			return 1;
 		}
-		else if(last->task->tasknum == tn){
-			tothrs -= last->task->hr;
-			totmin -= last->task->min;
+		else if(last->task->tasknum == tn){ // node is tail
+			removeTime(last->task->hr,last->task->min);
 			DNode *prevNode = last->prev;
 			prevNode->next = NULL;
 			last->prev = NULL;
@@ -279,11 +277,11 @@ using namespace std;
 					firstNode->prev = prevNode;
 					firstNode->next = NULL;
 					firstNode->prev = NULL;
-					tothrs -= firstNode->task->hr;
-					totmin -= firstNode->task->min;
+					removeTime(firstNode->task->hr,firstNode->task->min);
 					delete firstNode;
 					return 1;
 				}
+				firstNode = firstNode->next;
 			}
 			return 0;
 		}
