@@ -106,6 +106,10 @@ using namespace std;
 		//NOTE: if this moves a task up before a task with a higher priority (1 is
 		//higher priority than 2 - I know the wording is a bit weird), then this
 		//changes the priority of the task being moved to that higher priority
+		DNode *currNode = first;
+		while(currNode != NULL){
+
+		}
 
 	}
 
@@ -167,6 +171,7 @@ using namespace std;
 					break;
 				}
 			}
+			currNode = currNode->next;
 		}
 	}
 
