@@ -35,7 +35,9 @@ using namespace std;
 		totmin += newNode->task->min;
 		tothrs += newNode->task->hr;
 		numTasks++;
-		if(last == NULL){
+		if(first == NULL && last == NULL){
+			first = newNode;
+			last = newNode;
 			return;
 		}
 		DNode *tempLast = last;
@@ -44,13 +46,35 @@ using namespace std;
 		}
 		if(tempLast == NULL){ // reached beginning of list
 			newNode->next = first;
+			newNode->prev = NULL;
 			first->prev = newNode;
 			first = newNode;
 		}
-		else{
-			newNode->next = tempLast->next;
+		else if(tempLast == first && tempLast == last){
 			tempLast->next = newNode;
 			newNode->prev = tempLast;
+			newNode->next = NULL;
+			last = newNode;
+		}
+		else if(tempLast == first){
+			tempLast->next->prev = newNode;
+			newNode->next = tempLast->next;
+			newNode->prev = tempLast;
+			tempLast->next = newNode;
+		}
+		else if(tempLast == last){
+
+			tempLast->next = newNode;
+			newNode->prev = tempLast;
+			newNode->next = NULL;
+			last = newNode;
+
+		}
+		else{
+			newNode->prev = tempLast;
+			newNode->next = tempLast->next;
+			tempLast->next->prev = newNode;
+			tempLast->next = newNode;
 		}
 
 	}
@@ -61,6 +85,7 @@ using namespace std;
 		//kinda had to make you write pop because it’s //fundamental to so much of
 		//linked list data type uses (e.g., stack, undo).
 		DNode *lastNode = last;
+		Task *lastNodeTask = lastNode->task;
 		tothrs -= lastNode->task->hr;
 		totmin -= lastNode->task->min;
 		numTasks--;
@@ -68,13 +93,16 @@ using namespace std;
 			delete lastNode;
 			delete first;
 			delete last;
+			return lastNodeTask;
 		}
 		else{
 			DNode *prevNode = lastNode->prev;
 			lastNode->prev = NULL;
 			prevNode->next = NULL;
 			delete lastNode;
+			return lastNodeTask;
 		}
+		return lastNodeTask;
 	}
 
 	void DLL::printList() {
@@ -282,7 +310,6 @@ using namespace std;
 			task5, 2, 1:10
 			task7, 3, 2:54
 		*/
-		DNode *lastPNode;
 		DNode *tempHead = first;
 		while(tempHead != NULL){
 			if(tempHead->task->tasknum == tn){

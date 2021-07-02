@@ -1,0 +1,14 @@
+220 Lab,1, 8:23
+Update resume, 2, 2:30
+Write English Theme, 2, 4:50
+Finish Math Homework, 1, 2:15
+Get Dinner, 3, 1:00
+Call Mom, 1, 0:45
+Do laundry, 3, 0:45
+Return Library Books, 3, 1:15
+Register for Classes, 2, 3:30
+Extra Credit for History, 3, 3:30
+Study for Chem Exam, 1, 6:00
+Contact Study Group, 2, 0:15
+Exercise, 2, 0:45
+Sleep!, 1, 7:30
