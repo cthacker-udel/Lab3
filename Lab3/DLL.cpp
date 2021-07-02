@@ -249,7 +249,7 @@ using namespace std;
 			tothrs = 0;
 			totmin = 0;
 			numTasks--;
-			return 0;
+			return 1;
 		}
 		else if(firstNode->prev == NULL && firstNode->task->tasknum == tn){ // node is head
 			// is first node
