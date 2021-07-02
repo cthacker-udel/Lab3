@@ -231,10 +231,15 @@ using namespace std;
 					if(currNode->next->task->priority > currNode->task->priority){
 						currNode->task->priority = currNode->next->task->priority;
 					}
+					DNode *forwardNode = currNode->next->next;
+					currNode->prev->next = currNode->next;
 					currNode->next->prev = currNode->prev;
+					currNode->next->next = currNode;
 					currNode->prev = currNode->next;
-					currNode->next = currNode->next->next;
-					currNode->prev->next = currNode;
+					currNode->next = forwardNode;
+					if(forwardNode != NULL){
+						forwardNode->prev = currNode;
+					}
 					break;
 				}
 			}
