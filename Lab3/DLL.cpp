@@ -161,10 +161,17 @@ using namespace std;
 					}
 				}
 				else{
+					DNode *prevPrev = currNode->prev->prev;
 					currNode->prev->next = currNode->next;
-					currNode->next = currNode->prev;
-					currNode->prev = currNode->prev->prev;
 					currNode->prev->prev = currNode;
+					currNode->next = currNode->prev;
+					currNode->prev = prevPrev;
+					if(prevPrev != NULL){
+						prevPrev->next = currNode;
+					}
+					if(currNode->next->task->priority < currNode->task->priority){
+						currNode->task->priority = currNode->next->task->priority;
+					}
 				}
 
 			}

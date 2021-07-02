@@ -53,7 +53,6 @@ void ToDoList::interface() {
 			changePriorityofTask();
 			list->printList();
 		}
-
 		else if (choice ==6){
 			getPriorityTasks();
 		}
