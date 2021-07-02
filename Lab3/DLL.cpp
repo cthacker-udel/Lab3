@@ -111,13 +111,32 @@ using namespace std;
 			if(currNode->task->tasknum == tn){
 
 				if(currNode->prev == NULL){ // currNode is head of list
-
+					currNode->prev = last;
+					last->next = currNode;
+					first = currNode->next;
+					first->prev = NULL;
+					currNode->next = NULL;
+					last = currNode;
+					if(last->prev->task->priority < last->task->priority){
+						last->task->priority = last->prev->task->priority;
+					}
+					break;
 				}
 				else if(currNode->next == NULL){ // currNode is tail of list
-
+					currNode->prev->next = NULL;
+					currNode->next = currNode->prev;
+					currNode->prev = currNode->prev->prev;
+					last->prev = currNode;
+					last = currNode->next;
+					if(last->task->priority < currNode->task->priority){
+						currNode->task->priority = last->task->priority;
+					}
 				}
 				else{
-
+					currNode->prev->next = currNode->next;
+					currNode->next = currNode->prev;
+					currNode->prev = currNode->prev->prev;
+					currNode->prev->prev = currNode;
 				}
 
 			}
