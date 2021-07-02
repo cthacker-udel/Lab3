@@ -99,7 +99,7 @@ using namespace std;
 		}
 	}
 
-	void DLL::moveUp(int t) {
+	void DLL::moveUp(int tn) {
 		//moves task with number tn up one in the list.
 	    //If it is at the beginning of the list,
         //it will be moved to the end of the list.
@@ -108,7 +108,20 @@ using namespace std;
 		//changes the priority of the task being moved to that higher priority
 		DNode *currNode = first;
 		while(currNode != NULL){
+			if(currNode->task->tasknum == tn){
 
+				if(currNode->prev == NULL){ // currNode is head of list
+
+				}
+				else if(currNode->next == NULL){ // currNode is tail of list
+
+				}
+				else{
+
+				}
+
+			}
+			currNode = currNode->next;
 		}
 
 	}
