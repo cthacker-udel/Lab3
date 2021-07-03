@@ -77,7 +77,7 @@ void ToDoList::changePriorityofTask() {
 
 	if (tnum >0 && pnum > 0) {
 		list->changePriority(tnum,pnum);
-		list->printList();
+		//list->printList();
 	}
 
 }

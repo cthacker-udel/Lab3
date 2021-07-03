@@ -71,6 +71,7 @@ using namespace std;
 
 		}
 		else{
+			cout << "Landed in else statement" << endl;
 			newNode->prev = tempLast;
 			newNode->next = tempLast->next;
 			tempLast->next->prev = newNode;
@@ -324,15 +325,160 @@ using namespace std;
 			task5, 2, 1:10
 			task7, 3, 2:54
 		*/
+
+		if(first == NULL || last == NULL){
+			cout << "Cannot change priority of node if list is empty";
+			return;
+		}
+		if(first == last){ // 1 node left
+			first->task->priority = newp;
+		}
+
 		DNode *tempHead = first;
+
+		/*
+		 *
+		 * removing node
+		 *
+		 */
+
+		cout << "entering first while" << endl;
 		while(tempHead != NULL){
 			if(tempHead->task->tasknum == tn){
-				tempHead->task->priority = newp;
-				break;
+				if(tempHead->next == NULL){ // node is tail
+
+					tempHead->prev->next = NULL;
+					tempHead->prev = NULL;
+
+					// node is removed
+
+					break;
+
+				}
+				else if(tempHead->prev == NULL){ // node is head
+
+					tempHead->next->prev = NULL;
+					tempHead->next = NULL;
+
+					// node is removed
+
+					break;
+
+				}
+				else{
+
+					tempHead->prev->next = tempHead->next;
+					tempHead->next->prev = tempHead->prev;
+					tempHead->prev = NULL;
+					tempHead->next = NULL;
+
+					// node is removed
+
+					break;
+				}
+
 			}
+			tempHead = tempHead->next;
 		}
-		remove(tempHead->task->tasknum);
-		push(tempHead->task->task,tempHead->task->priority,tempHead->task->hr,tempHead->task->min);
+
+		/*
+		 *
+		 * node removed
+		 *
+		 */
+
+		/*
+		 *
+		 * begin placement
+		 *
+		 *
+		 */
+
+		cout << "Entering second while" << endl;
+		DNode *prevNode = last;
+		while(prevNode != NULL){
+
+			if(prevNode->task->priority == newp){
+
+				prevNode->next->prev = tempHead;
+				tempHead->prev = prevNode;
+				tempHead->next = prevNode->next;
+				prevNode->next = tempHead;
+				tempHead->task->priority = newp;
+				return;
+
+			}
+			prevNode = prevNode->prev;
+
+		}
+		// if we don't find the priority to place, then the priority doesnt exist, this loop below tests if we are trying to place newp = 3 and we only have 1 and 2 priorities
+		cout << "Entering third while" << endl;
+		prevNode = last;
+		while(prevNode != NULL){
+
+			if(prevNode->task->priority < newp){
+
+				if(prevNode != last){
+
+					tempHead->next = prevNode->next;
+					prevNode->next->prev = tempHead;
+					prevNode->next = tempHead;
+					tempHead->prev = prevNode;
+					tempHead->task->priority = newp;
+					return;
+
+				}
+				if(prevNode == last){
+
+					prevNode->next = tempHead;
+					tempHead->prev = prevNode;
+					tempHead->next = NULL;
+					last = tempHead;
+					tempHead->task->priority = newp;
+					return;
+
+				}
+				return;
+
+			}
+
+			prevNode = prevNode->prev;
+
+		}
+
+		cout << "Entering fourth while" << endl;
+		prevNode = first;
+		while(prevNode != NULL){
+
+			if(prevNode->task->priority > newp){
+
+				if(prevNode != first){
+					tempHead->next = prevNode;
+					tempHead->prev = prevNode->prev;
+					prevNode->prev->next = tempHead;
+					prevNode->prev = tempHead;
+					tempHead->task->priority = newp;
+					return;
+				}
+				if(prevNode == first){
+					tempHead->next = prevNode;
+					prevNode->prev = tempHead;
+					tempHead->prev = NULL;
+					first = tempHead;
+					tempHead->task->priority = newp;
+					return;
+				}
+				return;
+
+			}
+			prevNode = prevNode->next;
+
+		}
+
+		// 1
+		// 1
+		// 2
+		// 3
 	}
 
 	DLL::~DLL(){
