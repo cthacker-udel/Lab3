@@ -197,9 +197,14 @@ using namespace std;
 				totMin += firstNode->task->min;
 				totHr += firstNode->task->hr;
 			}
+			firstNode = firstNode->next;
 		}
 		*th = totHr;
 		*tm = totMin;
+		while(*tm >= 60){
+			*th += 1;
+			*tm -= 60;
+		}
 	}
 
 
