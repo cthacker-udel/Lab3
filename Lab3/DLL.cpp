@@ -161,7 +161,7 @@ using namespace std;
 					}
 				}
 				else{
-					DNode *prevPrev = currNode->prev->prev;
+					DNode *prevPrev = currNode->prev->prev; // = NULL
 					currNode->prev->next = currNode->next;
 					currNode->prev->prev = currNode;
 					currNode->next = currNode->prev;
@@ -171,6 +171,9 @@ using namespace std;
 					}
 					if(currNode->next->task->priority < currNode->task->priority){
 						currNode->task->priority = currNode->next->task->priority;
+					}
+					if(currNode->next == first){
+						first = currNode;
 					}
 				}
 
