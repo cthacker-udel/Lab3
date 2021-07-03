@@ -230,7 +230,7 @@ using namespace std;
 					break;
 				}
 				else{
-
+					// double check pointer reassignments
 					if(currNode->next->task->priority > currNode->task->priority){
 						currNode->task->priority = currNode->next->task->priority;
 					}
